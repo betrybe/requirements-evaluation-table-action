@@ -1,0 +1,6 @@
+name: "Requirements evaluation table"
+description: "Prints requirements evaluation table"
+
+runs:
+  using: "node16"
+  main: "dist/index.js"

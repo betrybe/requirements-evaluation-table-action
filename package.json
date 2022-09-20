@@ -1,0 +1,16 @@
+{
+  "name": "requirements-evaluation-table",
+  "version": "1.0.0",
+  "description": "Prints requirements evaluation table",
+  "main": "index.js",
+  "scripts": {
+    "pack": "ncc build index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@vercel/ncc": "^0.34.0"
+  }
+}
