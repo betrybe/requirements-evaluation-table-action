@@ -1,5 +1,15 @@
 name: "Requirements evaluation table"
 description: "Prints requirements evaluation table"
+inputs:
+  evaluation-data:
+    description: "JSON contendo os resultados do avaliador, no formato base64"
+    required: true
+  pr_number:
+    description: "Pull Request number that dispatched the workflow"
+    required: true
+  token:
+    description: "The GitHub token to use for making API requests"
+    required: true
 
 runs:
   using: "node16"

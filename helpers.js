@@ -1,6 +1,6 @@
 const gradeToApprove = 3;
 
-export const calculateGrades = (requirements, results) => requirements.reduce(
+const calculateGrades = (requirements, results) => requirements.reduce(
   (acc, requirement) => {
     const result = results.evaluations.find(
       (evaluation) => evaluation.description === requirement.description
@@ -18,12 +18,12 @@ export const calculateGrades = (requirements, results) => requirements.reduce(
     { requiredGrade: 0, bonusGrade: 0, requiredTotal: 0, bonusTotal: 0 }
 );
 
-export const calculatePercentages = (grades) => ({
+const calculatePercentages = (grades) => ({
   required: ((grades.requiredGrade / grades.requiredTotal) * 100).toFixed(2),
   total: (((grades.requiredGrade + grades.bonusGrade) / (grades.requiredTotal + grades.bonusTotal)) *100).toFixed(2),
 });
 
-export const generateRequirementsTable = (requirements, results) => requirements.reduce((acc, requirement) => {
+const generateRequirementsTable = (requirements, results) => requirements.reduce((acc, requirement) => {
   const result = results.evaluations.find(
     (evaluation) => evaluation.description === requirement.description
   );
@@ -36,7 +36,7 @@ export const generateRequirementsTable = (requirements, results) => requirements
 );
 
 
-export const comment = (percentages, requirementsTable) => `
+const generateComment = (percentages, requirementsTable) => `
   ### Resultado do projeto
   *Item* | |
   --- | :---:
@@ -47,3 +47,10 @@ export const comment = (percentages, requirementsTable) => `
   --- | :---:
   ${requirementsTable}
 `;
+
+module.exports = {
+  calculateGrades,
+  calculatePercentages,
+  generateRequirementsTable,
+  generateComment
+};

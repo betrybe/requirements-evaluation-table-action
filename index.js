@@ -1,20 +1,31 @@
-import { calculateGrades, calculatePercentages, generateRequirementsTable } from "./helpers";
+const core = require('@actions/core');
+const github = require('@actions/github');
+const helper = require("./helpers");
+const { requirements } = require('../../../../.trybe/requirements.json');
 
-const buffer = new Buffer('${{ steps.evaluator.outputs.result }}', 'base64');
+const evaluationData = core.getInput('evaluation-data', { required: true });
+const buffer = new Buffer(evaluationData, "base64");
 const results = JSON.parse(buffer.toString());
-const { requirements } = require('./.trybe/requirements.json');
 
-const grades = calculateGrades(requirements, results);
+const grades = helper.calculateGrades(requirements, results);
 
-const requirementsTable = generateRequirementsTable(requirements, results)
+const requirementsTable = helper.generateRequirementsTable(requirements, results)
 
-const percentages = calculatePercentages(grades);
+const percentages = helper.calculatePercentages(grades);
 
-const comment = generateComment = (percentages, requirementsTable)
+const comment = helper.generateComment(percentages, requirementsTable)
 
-github.rest.issues.createComment({
-  issue_number: context.payload.number,
-  owner: context.payload.organization.login,
-  repo: context.payload.repository.name,
-  body: comment
-});
+const token = core.getInput('token', { required: true });
+const client = github.getOctokit(token);
+const { owner, repo } = github.context.issue;
+
+async function createComment() {
+  await client.issues.createComment({
+    owner,
+    repo,
+    issue_number: process.env.INPUT_PR_NUMBER,
+    body: comment,
+  });
+}
+
+createComment();
